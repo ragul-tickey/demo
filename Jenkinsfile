@@ -1,25 +1,23 @@
+
 pipeline {
     agent any
 
     stages {
         stage('Checkout') {
             steps {
-                // Checkout code from the repository
-                git branch: 'main', url: 'https://github.com/ragul-tickey/demo.git'
+                git 'https://github.com/ragul-tickey/demo.git'
             }
         }
-
         stage('Build') {
             steps {
-                // Build your frontend application
-                sh 'npm install' // or whatever command you use to build your app
+                sh 'npm install' // or any other build commands you have
             }
         }
-
         stage('Deploy') {
             steps {
-                // Deploy your application
-                sh 'scp -r /var/www/html/* user@server:/var/www/html/'
+                sh 'ls -la' // List files in Jenkins workspace
+                sh 'sudo cp -r * /var/www/html' // Copy files to /var/www/html
+                sh 'ls -la /var/www/html' // List files in /var/www/html after deployment
             }
         }
     }
